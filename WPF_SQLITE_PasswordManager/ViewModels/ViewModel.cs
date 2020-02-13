@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
-using System.Runtime.CompilerServices;
+using System.Data.SQLite;
+using System.IO;
+using WPF_SQLITE_PasswordManager.Models;
+using WPF_SQLITE_PasswordManager.Views;
 
-namespace WPF_SQLITE_PasswordManager
+namespace WPF_SQLITE_PasswordManager.ViewModels
 {
     public class ViewModel : INotifyPropertyChanged
     {
@@ -27,9 +30,38 @@ namespace WPF_SQLITE_PasswordManager
 
         public ViewModel()
         {
+            TryConnect();
+
             db = new ApplicationContext();
             db.PasswordModels.Load();
             PasswordModels = db.PasswordModels.Local.ToBindingList();
+        }
+
+        public void TryConnect()
+        {
+            if (!File.Exists(@".\pmanager.db")) 
+            {
+                SQLiteConnection.CreateFile(@".\pmanager.db");
+
+                using (SQLiteConnection connection = new SQLiteConnection("Data Source=pmanager.db;"))
+                {
+                    string commandCreate = "CREATE TABLE  IF NOT EXISTS PasswordModels ( Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, Title TEXT, Login TEXT, Password TEXT) ";
+                    SQLiteCommand CommandCreate = new SQLiteCommand(commandCreate, connection);
+
+                    string commandInsert = "INSERT INTO PasswordModels ([Title], [Login], [Password] ) VALUES ( @Title, @Login, @Password)";
+                    SQLiteCommand CommandInsert = new SQLiteCommand(commandInsert, connection);
+                    var p = new PasswordModel() { Id = 1, Login = "mylogin", Password = "123456", Title = "Test title" };
+                    CommandInsert.Parameters.AddWithValue("@Title", p.Title);
+                    CommandInsert.Parameters.AddWithValue("@Login", p.Login);
+                    CommandInsert.Parameters.AddWithValue("@Password", p.Password);
+                    
+                    connection.Open(); 
+                    CommandCreate.ExecuteNonQuery();
+                    CommandInsert.ExecuteNonQuery();
+                    connection.ChangePassword("apppassword");
+                    connection.Close();
+                }
+            }
         }
 
         // команда добавления
@@ -40,10 +72,10 @@ namespace WPF_SQLITE_PasswordManager
                 return addCommand ??
                   (addCommand = new RelayCommand((o) =>
                   {
-                      ChangeWindow changeWindow = new ChangeWindow(new PasswordModel());
-                      if (changeWindow.ShowDialog() == true)
+                      EditWindow editWindow = new EditWindow(new PasswordModel());
+                      if (editWindow.ShowDialog() == true)
                       {
-                          PasswordModel pm = changeWindow.PasswordModel;
+                          PasswordModel pm = editWindow.PasswordModel;
                           db.PasswordModels.Add(pm);
                           db.SaveChanges();
                       }
@@ -71,18 +103,18 @@ namespace WPF_SQLITE_PasswordManager
                           Password = selected.Password,
                           Title = selected.Title
                       };
-                      ChangeWindow changeWindow = new ChangeWindow(pm);
+                      EditWindow editWindow = new EditWindow(pm);
 
 
-                      if (changeWindow.ShowDialog() == true)
+                      if (editWindow.ShowDialog() == true)
                       {
                           // получаем измененный объект
-                          selected = db.PasswordModels.Find(changeWindow.PasswordModel.Id);
+                          selected = db.PasswordModels.Find(editWindow.PasswordModel.Id);
                           if (selected != null)
                           {
-                              selected.Login = changeWindow.PasswordModel.Login;
-                              selected.Title = changeWindow.PasswordModel.Title;
-                              selected.Password = changeWindow.PasswordModel.Password;
+                              selected.Login = editWindow.PasswordModel.Login;
+                              selected.Title = editWindow.PasswordModel.Title;
+                              selected.Password = editWindow.PasswordModel.Password;
                               db.Entry(selected).State = EntityState.Modified;
                               db.SaveChanges();
                           }
@@ -109,9 +141,9 @@ namespace WPF_SQLITE_PasswordManager
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        protected virtual void OnPropertyChanged(string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

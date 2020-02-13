@@ -1,11 +1,12 @@
 ﻿using System.Windows;
+using WPF_SQLITE_PasswordManager.Models;
 
-namespace WPF_SQLITE_PasswordManager
+namespace WPF_SQLITE_PasswordManager.Views
 {
-    public partial class ChangeWindow : Window
+    public partial class EditWindow : Window
     {
         public PasswordModel PasswordModel;
-        public ChangeWindow(PasswordModel passwordModel)
+        public EditWindow(PasswordModel passwordModel)
         {
             InitializeComponent();
             PasswordModel = passwordModel;

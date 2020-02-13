@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace WPF_SQLITE_PasswordManager
+namespace WPF_SQLITE_PasswordManager.Models
 {
     public class PasswordModel : INotifyPropertyChanged
     {
@@ -10,6 +10,7 @@ namespace WPF_SQLITE_PasswordManager
         private string login;
         private string password;
 
+        
         public string Title
         {
             get { return title; }
