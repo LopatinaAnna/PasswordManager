@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:WPF_SQLITE_PasswordManager"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:WPF_SQLITE_PasswordManager.ViewModels"
     Title="Password Manager"
     Width="330"
     Height="460"
@@ -15,6 +16,10 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
 
+    <Window.DataContext>
+        <vm:ViewModel/>
+    </Window.DataContext>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -59,6 +64,7 @@
                             VerticalAlignment="Center"
                             Text="{Binding Login}" />
                         <TextBlock
+                            x:Name="copyPassword"
                             Grid.Row="2"
                             Grid.Column="0"
                             Margin="5,0,0,5"
@@ -72,6 +78,8 @@
                             VerticalAlignment="Center"
                             Content="&#xE8C8;"
                             Cursor="Hand"
+                            Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                            CommandParameter="{Binding Text, ElementName=copyPassword}"
                             Style="{StaticResource editButtons}" />
                     </Grid>
                 </DataTemplate>

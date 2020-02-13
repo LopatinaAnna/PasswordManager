@@ -17,7 +17,7 @@ namespace WPF_SQLITE_PasswordManager.Models
             set
             {
                 title = value;
-                OnPropertyChanged("Title");
+                OnPropertyChanged();
             }
         }
 
@@ -27,7 +27,7 @@ namespace WPF_SQLITE_PasswordManager.Models
             set
             {
                 login = value;
-                OnPropertyChanged("Login");
+                OnPropertyChanged();
             }
         }
 
@@ -37,7 +37,7 @@ namespace WPF_SQLITE_PasswordManager.Models
             set
             {
                 password = value;
-                OnPropertyChanged("Password");
+                OnPropertyChanged();
             }
         }
 

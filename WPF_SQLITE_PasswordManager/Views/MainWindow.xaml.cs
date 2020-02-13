@@ -10,8 +10,6 @@ namespace WPF_SQLITE_PasswordManager.Views
             InitializeComponent();
 
             AuthorizationWindow authorizationWindow = new AuthorizationWindow();
-
-            DataContext = new ViewModel();
         }
     }
 }

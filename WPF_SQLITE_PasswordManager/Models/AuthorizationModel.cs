@@ -13,7 +13,7 @@ namespace WPF_SQLITE_PasswordManager.Models
             set
             {
                 enterPassword = value;
-                OnPropertyChanged("EnterPassword");
+                OnPropertyChanged();
             }
         }
 

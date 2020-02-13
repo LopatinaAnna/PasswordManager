@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.SQLite;
 using System.IO;
+using System.Windows;
 using WPF_SQLITE_PasswordManager.Models;
 using WPF_SQLITE_PasswordManager.Views;
 
@@ -15,6 +16,7 @@ namespace WPF_SQLITE_PasswordManager.ViewModels
         RelayCommand addCommand;
         RelayCommand editCommand;
         RelayCommand removeCommand;
+        RelayCommand copyCommand;
 
         IEnumerable<PasswordModel> passwordModels;
 
@@ -24,7 +26,7 @@ namespace WPF_SQLITE_PasswordManager.ViewModels
             set
             {
                 passwordModels = value;
-                OnPropertyChanged("PasswordModels");
+                OnPropertyChanged();
             }
         }
 
@@ -136,6 +138,22 @@ namespace WPF_SQLITE_PasswordManager.ViewModels
                       PasswordModel pm = selectedItem as PasswordModel;
                       db.PasswordModels.Remove(pm);
                       db.SaveChanges();
+                  }));
+            }
+        }
+
+        // команда копирования пароля в буфер
+        public RelayCommand CopyCommand
+        {
+            get
+            {
+                return copyCommand ??
+                  (copyCommand = new RelayCommand((obj) =>
+                  {
+                      if (obj == null) return;
+                      // получаем выделенный объект
+                      Clipboard.Clear();
+                      Clipboard.SetText(obj as string);
                   }));
             }
         }
