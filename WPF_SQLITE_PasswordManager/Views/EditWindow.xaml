@@ -57,13 +57,15 @@
                 MinWidth="60"
                 Margin="5"
                 Click="Accept_Click"
-                IsDefault="True">
+                IsDefault="True"
+                Style="{StaticResource MainButton}">
                 Ok
             </Button>
             <Button
                 MinWidth="60"
                 Margin="5"
-                IsCancel="True">
+                IsCancel="True"
+                Style="{StaticResource MainButton}">
                 Cancel
             </Button>
         </StackPanel>

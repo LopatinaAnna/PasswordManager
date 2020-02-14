@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using WPF_SQLITE_PasswordManager.Models;
 
 namespace WPF_SQLITE_PasswordManager.Views
 {

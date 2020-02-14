@@ -151,7 +151,6 @@ namespace WPF_SQLITE_PasswordManager.ViewModels
                   (copyCommand = new RelayCommand((obj) =>
                   {
                       if (obj == null) return;
-                      // получаем выделенный объект
                       Clipboard.Clear();
                       Clipboard.SetText(obj as string);
                   }));

@@ -36,14 +36,10 @@
             Grid.Column="0"
             BorderBrush="{x:Null}"
             ItemsSource="{Binding PasswordModels}">
+            
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -52,35 +48,29 @@
 
                         <TextBlock
                             Grid.Row="0"
-                            Grid.Column="0"
                             Margin="5,5,0,0"
                             VerticalAlignment="Center"
-                            FontSize="16"
                             Text="{Binding Title}" />
                         <TextBlock
                             Grid.Row="1"
-                            Grid.Column="0"
                             Margin="5,0,0,0"
                             VerticalAlignment="Center"
                             Text="{Binding Login}" />
                         <TextBlock
                             x:Name="copyPassword"
                             Grid.Row="2"
-                            Grid.Column="0"
-                            Margin="5,0,0,5"
                             VerticalAlignment="Center"
-                            Text="{Binding Password}" />
-                        <Button
-                            Grid.Row="2"
-                            Grid.Column="1"
                             Margin="5,0,0,5"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
+                            Text="{Binding Password}" >
+                            <Button
                             Content="&#xE8C8;"
                             Cursor="Hand"
+                            Margin="5 3 0 -7"
                             Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                             CommandParameter="{Binding Text, ElementName=copyPassword}"
-                            Style="{StaticResource editButtons}" />
+                            Style="{StaticResource editButtons}" 
+                            Foreground="#FF107A6B" />
+                        </TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -93,18 +83,21 @@
                 Width="70"
                 Margin="10"
                 Command="{Binding AddCommand}"
+                Style="{StaticResource MainButton}"
                 Content="Add" />
             <Button
                 Width="70"
                 Margin="10"
                 Command="{Binding EditCommand}"
                 CommandParameter="{Binding ElementName=passwordList, Path=SelectedItem}"
+                Style="{StaticResource MainButton}"
                 Content="Edit" />
             <Button
                 Width="70"
                 Margin="10"
                 Command="{Binding RemoveCommand}"
                 CommandParameter="{Binding ElementName=passwordList, Path=SelectedItem}"
+                Style="{StaticResource MainButton}"
                 Content="Remove" />
         </StackPanel>
     </Grid>

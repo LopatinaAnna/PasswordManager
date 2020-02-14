@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WPF_SQLITE_PasswordManager.ViewModels;
 
 namespace WPF_SQLITE_PasswordManager.Views
 {
@@ -7,9 +6,9 @@ namespace WPF_SQLITE_PasswordManager.Views
     {
         public MainWindow()
         {
-            InitializeComponent();
-
             AuthorizationWindow authorizationWindow = new AuthorizationWindow();
+
+            InitializeComponent();
         }
     }
 }
