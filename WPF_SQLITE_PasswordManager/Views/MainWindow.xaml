@@ -7,13 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:WPF_SQLITE_PasswordManager.ViewModels"
     Title="Password Manager"
-    Width="330"
+    Width="360"
     Height="460"
-    MinWidth="330"
+    MinWidth="360"
     MinHeight="170"
-    FontFamily="Calibri Light"
     FontSize="16"
     WindowStartupLocation="CenterScreen"
+    Background="LightGray"
     mc:Ignorable="d">
 
     <Window.DataContext>
@@ -27,7 +27,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
         <ListBox
@@ -35,7 +35,7 @@
             Grid.Row="0"
             Grid.Column="0"
             BorderBrush="{x:Null}"
-            ItemsSource="{Binding PasswordModels}">
+            ItemsSource="{Binding PasswordModels}" >
             
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -69,7 +69,7 @@
                             Command="{Binding DataContext.CopyCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
                             CommandParameter="{Binding Text, ElementName=copyPassword}"
                             Style="{StaticResource editButtons}" 
-                            Foreground="#FF107A6B" />
+                            Foreground="Teal" />
                         </TextBlock>
                     </Grid>
                 </DataTemplate>
@@ -80,24 +80,21 @@
             HorizontalAlignment="Center"
             Orientation="Horizontal">
             <Button
-                Width="70"
+                Width="90"
                 Margin="10"
                 Command="{Binding AddCommand}"
-                Style="{StaticResource MainButton}"
                 Content="Add" />
             <Button
-                Width="70"
+                Width="90"
                 Margin="10"
                 Command="{Binding EditCommand}"
                 CommandParameter="{Binding ElementName=passwordList, Path=SelectedItem}"
-                Style="{StaticResource MainButton}"
                 Content="Edit" />
             <Button
-                Width="70"
+                Width="90"
                 Margin="10"
                 Command="{Binding RemoveCommand}"
                 CommandParameter="{Binding ElementName=passwordList, Path=SelectedItem}"
-                Style="{StaticResource MainButton}"
                 Content="Remove" />
         </StackPanel>
     </Grid>

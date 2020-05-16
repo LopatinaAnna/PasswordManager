@@ -15,7 +15,7 @@ namespace WPF_SQLITE_PasswordManager.ViewModels
                   (checkEnterCommand = new RelayCommand((obj) =>
                   {
                       AuthorizationModel model = new AuthorizationModel();
-                      if (obj as string != "1111")
+                      if (obj as string != "")
                       {
                           AuthorizationWindow authorizationWindow = new AuthorizationWindow();
                       }
